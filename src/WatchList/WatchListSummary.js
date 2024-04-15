@@ -20,7 +20,7 @@ export default function WatchListSummary() {
         </div>
         <div className="summarybox">
           <img src="./Hourglass.svg" alt="hourglass__logo" />
-          <p>10.00</p>
+          <div>10.00</div>
         </div>
       </div>
     </div>

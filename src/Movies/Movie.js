@@ -1,10 +1,10 @@
-export default function Movie() {
+export default function Movie({ movie }) {
   return (
     <div className="movie">
-      <img src="https://via.placeholder.com/96x96" />
+      <img src={movie.Poster} alt={movie.Title} />
       <div className="movie_detail_box">
-        <div className="movie_detail_box_name">Starboy By Weekend</div>
-        <div className="movie_detail_box_year">Year: 2011</div>
+        <div className="movie_detail_box_name">{movie.Title}</div>
+        <div className="movie_detail_box_year">{movie.Year}</div>
       </div>
     </div>
   );
