@@ -5,6 +5,7 @@ export default function Rating({
   height = 24,
   width = 24,
   color = "#ffa200",
+  handleOnRating,
 }) {
   const [tempRating, setTempRating] = useState(null);
   const [rating, setRating] = useState(0);
@@ -23,6 +24,10 @@ export default function Rating({
     lineHeight: "1",
     color: "white",
   };
+  function handleClick(value) {
+    setRating(value);
+    handleOnRating(value);
+  }
 
   return (
     <div style={parentContainer}>
@@ -36,7 +41,7 @@ export default function Rating({
             key={i}
             handleMouse={setTempRating}
             fill={tempRating ? tempRating > i : rating > i}
-            handleClick={setRating}
+            handleClick={handleClick}
           />
         ))}
       </div>

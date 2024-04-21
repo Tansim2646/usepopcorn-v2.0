@@ -1,38 +1,86 @@
+import { useEffect, useState } from "react";
 import Rating from "../utilities/Rating";
+import { BounceLoader } from "react-spinners";
+import AddToWatchList from "./AddToWatchList";
+const API_KEY = "8b145ec7";
+const override = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translateY(-60%)",
+  transform: "translateX(-50%)",
+};
 
-export default function MovieDetails() {
+export default function MovieDetails({
+  isSelected,
+  onUnSelected,
+  handleSettingWatchList,
+}) {
+  const [isLoading, setIsLoading] = useState(false);
+  const [movieDetails, setMovieDetails] = useState(null);
+  useEffect(() => {
+    async function getMovieDetails() {
+      setIsLoading(true);
+      try {
+        const response = await fetch(
+          `http://www.omdbapi.com/?i=${isSelected}&apikey=${API_KEY}`
+        );
+        if (!response.ok) {
+          throw new Error("Something went wrong ❌");
+        }
+        const result = await response.json();
+        setMovieDetails(result);
+      } catch (error) {
+        console.error(error.message);
+      } finally {
+        setIsLoading(false);
+      }
+    }
+    getMovieDetails();
+  }, [isSelected]);
   return (
     <div className="moviedetails">
-      <div className="movieheader">
-        <img src="https://via.placeholder.com/120x142" alt="movie_poster" />
-        <div className="moviecredentials">
-          <h2>Hello Dolly</h2>
-          <p className="release_date">16 Dec 1969, 146 min</p>
-          <h4>Adventure,conemedy,Musical</h4>
-          <p className="moviecredentials__rating">
-            <span>
-              <img src="./Star.svg" alt="movie__rating"></img>
-            </span>
-            7.0IMDB Rating
-          </p>
-          <span className="backnav">
-            <img src="./Left_Arrow.svg" alt="backnavigation"></img>
-          </span>
-        </div>
-      </div>
-      <div className="description">
-        <div className="addtowatchlist">
-          <Rating />
-          <button className="addtowatchlist__button">+ Add To Watchlist</button>
-        </div>
-        <div className="movie__description">
-          <p className="plot">
-            A gawky Englishman comes to Los Angeles to find the woman of his
-            dreams. Starring Stephen Merchant, Christine Woods, Nate Torrence
-          </p>
-          <p className="movie__director">Directed by N/A</p>
-        </div>
-      </div>
+      {isLoading ? (
+        <BounceLoader
+          size={40}
+          cssOverride={override}
+          loading={isLoading}
+          color="#94C5CC"
+        />
+      ) : (
+        <>
+          <div className="movieheader">
+            <img src={movieDetails?.Poster} alt={movieDetails?.Title} />
+            <div className="moviecredentials">
+              <h2>{movieDetails?.Title}</h2>
+              <p className="release_date">
+                {movieDetails?.Released}, {movieDetails?.Runtime}
+              </p>
+              <h4>{movieDetails?.Genre}</h4>
+              <p className="moviecredentials__rating">
+                <span>
+                  <img src="./Star.svg" alt="movie__rating"></img>
+                </span>
+                {movieDetails?.imdbRating} IMDB Rating
+              </p>
+              <span className="backnav" onClick={() => onUnSelected()}>
+                <img src="./Left_Arrow.svg" alt="backnavigation"></img>
+              </span>
+            </div>
+          </div>
+          <div className="description">
+            <AddToWatchList
+              handleSettingWatchList={handleSettingWatchList}
+              movie={movieDetails}
+              onUnSelected={onUnSelected}
+            />
+            <div className="movie__description">
+              <p className="plot">{movieDetails?.Plot}</p>
+              <p className="movie__director">{movieDetails?.Director}</p>
+            </div>
+          </div>
+        </>
+      )}
     </div>
   );
 }

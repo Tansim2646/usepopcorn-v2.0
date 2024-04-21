@@ -4,13 +4,19 @@ import Navbar from "./Navbar";
 import Main from "./Main";
 import MovieList from "./Movies/MovieList";
 import WatchList from "./WatchList/WatchList";
-import MovieDetails from "./MovieDetails/MovieDetails";
 import { useState } from "react";
 
 export default function App() {
   const [movies, setMovies] = useState([]);
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  const [isSelected, setIsSelected] = useState(null);
+  function handleSelected(id) {
+    setIsSelected(id);
+  }
+  function onUnSelected() {
+    setIsSelected(null);
+  }
   return (
     <>
       <Circle />
@@ -22,8 +28,12 @@ export default function App() {
           movies={movies}
         />
         <Main>
-          <MovieList movies={movies} isLoading={isLoading} />
-          <WatchList />
+          <MovieList
+            movies={movies}
+            isLoading={isLoading}
+            onSelected={handleSelected}
+          />
+          <WatchList isSelected={isSelected} onUnSelected={onUnSelected} />
         </Main>
       </Container>
     </>

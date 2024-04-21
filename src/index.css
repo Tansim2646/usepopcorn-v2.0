@@ -282,6 +282,7 @@ body {
   align-self: stretch;
   border: 1px solid var(--Sea-Salt, #f8f8f8);
   background: var(--Black, #000100);
+  position: relative;
 }
 .movieheader {
   width: 100%;
@@ -346,6 +347,7 @@ body {
   gap: 16px;
   border-radius: 10px;
   background: #171717;
+  transition: all 0.2s;
 }
 .addtowatchlist__button {
   padding: 6px 40px;

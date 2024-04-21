@@ -8,7 +8,7 @@ const override = {
   transform: "translateX(-50%)",
 };
 
-export default function MovieList({ movies, isLoading }) {
+export default function MovieList({ movies, isLoading, onSelected }) {
   return (
     <div className="movielist">
       <BounceLoader
@@ -19,7 +19,9 @@ export default function MovieList({ movies, isLoading }) {
       />
       {movies.map((movie) => {
         if (movie.Poster === "N/A") return;
-        return <Movie movie={movie} key={movie.imdbID} />;
+        return (
+          <Movie movie={movie} key={movie.imdbID} onSelected={onSelected} />
+        );
       })}
     </div>
   );
