@@ -17,6 +17,7 @@ export default function Navbar({ setMovies, setError, setIsLoading, movies }) {
           throw new Error("Movie Not Found ❌");
         }
         setMovies(result.Search);
+        setError("");
       } catch (err) {
         setError(err.message);
       } finally {
@@ -27,6 +28,7 @@ export default function Navbar({ setMovies, setError, setIsLoading, movies }) {
       handleRequest();
     }
   }, [keyword]);
+
   return (
     <div className="navbar">
       <div className="navbar__container">

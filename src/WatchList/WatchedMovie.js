@@ -1,7 +1,7 @@
-export default function WatchedMovie({ movie }) {
+export default function WatchedMovie({ movie, setWatchList }) {
   return (
     <div className="watchedmovie">
-      <img src={movie.Poster} />
+      <img src={movie.Poster} alt="poster" />
       <div className="watchedmoviedetails">
         <p>{movie.Title}</p>
         <div className="watchedmoviesummary">
@@ -10,15 +10,22 @@ export default function WatchedMovie({ movie }) {
             <p>{movie.imdbRating}</p>
           </div>
           <div className="watchedmoviedetail">
-            <img src="./Sun.svg" />
+            <img src="./Sun.svg" alt="userRating" />
             <p>{movie.userRating}</p>
           </div>
           <div className="watchedmoviedetail">
-            <img src="./Hourglass.svg" />
+            <img src="./Hourglass.svg" alt="runtime" />
             <p>{movie.Runtime}</p>
           </div>
-          <div className="watchedmoviedetail">
-            <img src="./cancel.svg" />
+          <div
+            className="watchedmoviedetail"
+            onClick={() =>
+              setWatchList((wl) =>
+                wl.filter((wm) => wm.imdbID !== movie.imdbID)
+              )
+            }
+          >
+            <img src="./cancel.svg" alt="cancel" />
           </div>
         </div>
       </div>

@@ -1,9 +1,12 @@
-import { useState } from "react";
 import MovieDetails from "../MovieDetails/MovieDetails";
 import WatchListDetails from "./WatchListDetails";
 
-export default function WatchList({ isSelected, onUnSelected }) {
-  const [watchList, setWatchList] = useState([]);
+export default function WatchList({
+  isSelected,
+  onUnSelected,
+  watchList,
+  setWatchList,
+}) {
   function handleSettingWatchList(movie) {
     if (
       !watchList.some((watchedMovie) => watchedMovie.imdbID === movie.imdbID)
@@ -16,8 +19,9 @@ export default function WatchList({ isSelected, onUnSelected }) {
       isSelected={isSelected}
       onUnSelected={onUnSelected}
       handleSettingWatchList={handleSettingWatchList}
+      watchList={watchList}
     />
   ) : (
-    <WatchListDetails watchList={watchList} />
+    <WatchListDetails watchList={watchList} setWatchList={setWatchList} />
   );
 }

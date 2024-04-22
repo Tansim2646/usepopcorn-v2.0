@@ -11,6 +11,7 @@ export default function App() {
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [isSelected, setIsSelected] = useState(null);
+  const [watchList, setWatchList] = useState([]);
   function handleSelected(id) {
     setIsSelected(id);
   }
@@ -33,7 +34,12 @@ export default function App() {
             isLoading={isLoading}
             onSelected={handleSelected}
           />
-          <WatchList isSelected={isSelected} onUnSelected={onUnSelected} />
+          <WatchList
+            isSelected={isSelected}
+            onUnSelected={onUnSelected}
+            watchList={watchList}
+            setWatchList={setWatchList}
+          />
         </Main>
       </Container>
     </>

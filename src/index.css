@@ -339,6 +339,10 @@ body {
   gap: 16px;
   align-self: stretch;
 }
+.description > p {
+  color: white;
+  font-weight: bold;
+}
 .addtowatchlist {
   display: flex;
   padding: 24px;

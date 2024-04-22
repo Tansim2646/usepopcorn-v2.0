@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import Rating from "../utilities/Rating";
 import { BounceLoader } from "react-spinners";
 import AddToWatchList from "./AddToWatchList";
 const API_KEY = "8b145ec7";
@@ -15,9 +14,12 @@ export default function MovieDetails({
   isSelected,
   onUnSelected,
   handleSettingWatchList,
+  watchList,
 }) {
   const [isLoading, setIsLoading] = useState(false);
   const [movieDetails, setMovieDetails] = useState(null);
+  const isWatched = watchList.some((wm) => wm.imdbID === isSelected);
+  console.log(isWatched);
   useEffect(() => {
     async function getMovieDetails() {
       setIsLoading(true);
@@ -69,11 +71,15 @@ export default function MovieDetails({
             </div>
           </div>
           <div className="description">
-            <AddToWatchList
-              handleSettingWatchList={handleSettingWatchList}
-              movie={movieDetails}
-              onUnSelected={onUnSelected}
-            />
+            {!isWatched ? (
+              <AddToWatchList
+                handleSettingWatchList={handleSettingWatchList}
+                movie={movieDetails}
+                onUnSelected={onUnSelected}
+              />
+            ) : (
+              <p>You have already rated this movie 😊</p>
+            )}
             <div className="movie__description">
               <p className="plot">{movieDetails?.Plot}</p>
               <p className="movie__director">{movieDetails?.Director}</p>
